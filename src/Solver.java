@@ -16,10 +16,12 @@ public class Solver {
 			
 		//Actual Solver loop
 		int pos = 0;
+		int col = 0;
+		int row = 0;
 		while(pos<(GameGrid.GRID_DIM*GameGrid.GRID_DIM-2)) {		
-			int col = pos/9;
-			int row = pos%9;
-			
+			col = pos/9;
+			row = pos%9;
+		
 			if(!game.isInitial(col, row)) {	
 				if(triedEverything(pos)) {	
 					//If no valid number in first non initial field, then it is unsolvable
