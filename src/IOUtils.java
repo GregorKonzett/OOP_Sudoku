@@ -26,13 +26,13 @@ public class IOUtils {
         if (!Files.exists(fileName))
             throw new IllegalArgumentException("Given file does not exist: " + fileName);
 
-        int[][] grid = new int[GameGrid.GRID_DIM][GameGrid.GRID_DIM];
+        int[][] grid = new int[RGameGrid.GRID_DIM][RGameGrid.GRID_DIM];
         
         try {     
         	Scanner in = new Scanner(fileName);         
 	
-	        for(int row = 0; row < GameGrid.GRID_DIM; row++) {
-	            for(int column = 0; column < GameGrid.GRID_DIM; column++) {
+	        for(int row = 0; row < RGameGrid.GRID_DIM; row++) {
+	            for(int column = 0; column < RGameGrid.GRID_DIM; column++) {
 	                if(!in.hasNextInt())
 	                    throw new RuntimeException("Given Sudoku file has invalid format: " + fileName);
 	

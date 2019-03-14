@@ -2,7 +2,7 @@ import org.junit.Test;
 import org.junit.Before;
 
 public class SolverBasicTest {
-    private GameGrid game;
+    private RGameGrid game;
 
     @Before
     public void setUp() {
@@ -18,7 +18,7 @@ public class SolverBasicTest {
             {4,3,0,5,0,9,0,1,2}
         };
 
-        game = new GameGrid(grid);
+        game = new RGameGrid(grid);
     }
 
     @Test

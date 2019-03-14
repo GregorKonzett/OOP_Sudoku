@@ -1,7 +1,7 @@
 import org.junit.Test;
 import org.junit.Before;
 
-public class GameGridBasicTest {
+public class RGameGridBasicTest {
     private int[][] grid;
 
     @Before

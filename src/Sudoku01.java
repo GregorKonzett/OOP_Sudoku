@@ -12,9 +12,18 @@ public class Sudoku01 {
         			"1. Set field\n" +
         			"2. Clear field\n" +
                 "3. Print game\n" +
-        		"4. Solve\n\n" +
-                "5. Exit\n\n" +
+        		"4. Solve\n" +
+                "5. Solve all\n" +
+                "6. Exit\n\n" +
                 "Select an action [1-5]: ");
+    }   
+    
+    
+    public static void printStartMenu() {
+    	System.out.print("\n" +
+    			"1. Normal Game\n" +
+    			"2. X Game\n" +
+    			"Select an action [1-2]: ");
     }   
 
     /**
@@ -74,9 +83,20 @@ public class Sudoku01 {
             {4,3,0,5,0,9,0,1,2}
         };
         
-        GameGrid game = new GameGrid("./games/sudoku1.sd");
-  
-        // TODO print the grid here
+        
+        printStartMenu();
+        
+        int input = parseInput();
+        GameGrid game = null;
+        if(input==1) {
+        	game = new RGameGrid("./games/sudoku1.sd");
+        } else if(input == 2) {
+        	game = new XGameGrid("./games/sudoku1.sd");
+        } else {
+        	return;
+        }
+        
+ 
         System.out.println(game.toString());
         
         // TODO implement the game loop here
@@ -85,7 +105,7 @@ public class Sudoku01 {
         		System.out.println("---Menu---");
         		printMenu();
         		
-        		int input = parseInput();
+        		input = parseInput();
         		
         		if(input==1) { //Set field
         			game.setField(requestInt("Enter the X coord", 0, grid[0].length-1),requestInt("Enter the Y coord", 0, grid.length-1),requestInt("Enter the value", 0, 9));
@@ -96,13 +116,16 @@ public class Sudoku01 {
         		} else if(input == 3) { //Print game 
         			System.out.println(game.toString());
         		} else if(input == 4) {
-        			GameGrid copiedGame = new GameGrid(game);
+        			GameGrid copiedGame = new RGameGrid(game);
         			if(Solver.solve(copiedGame)) {
         				System.out.println(copiedGame.toString());
         			} else {
         				System.out.println("No solution found");
         			}
         		} else if(input == 5) {
+        			GameGrid copiedGame = new RGameGrid(game);
+        			System.out.println(Solver.findAllSolutions(copiedGame).size());
+        		} else if(input == 6) {
         			break;
         		} else {
         			System.out.println("Wrong input");

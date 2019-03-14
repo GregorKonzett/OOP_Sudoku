@@ -1,9 +1,20 @@
+import java.util.ArrayList;
 
 public class Solver {
 	
-	static int[][] tries = new int[GameGrid.GRID_DIM*GameGrid.GRID_DIM-2][10];
+	static int[][] tries = new int[RGameGrid.GRID_DIM*RGameGrid.GRID_DIM-2][10];
 	static int firstNonInitial=0;
 	private static GameGrid game;
+	private static ArrayList<GameGrid> solutions = new ArrayList<>();
+	
+	public static ArrayList<GameGrid> findAllSolutions(GameGrid game) {		
+		boolean allSolutionsFound = false;
+		solutions.clear();
+		
+		solve(game);
+		
+		return solutions;
+	}
 	
 	public static boolean solve(GameGrid passedGame) {
 		game = passedGame;
@@ -18,9 +29,20 @@ public class Solver {
 		int pos = 0;
 		int col = 0;
 		int row = 0;
-		while(pos<(GameGrid.GRID_DIM*GameGrid.GRID_DIM-2)) {		
+		boolean cantFindNewSolutions=false;
+		while(!cantFindNewSolutions) {		
 			col = pos/9;
 			row = pos%9;
+			
+			
+			//pos<(GameGrid.GRID_DIM*GameGrid.GRID_DIM-2)
+			
+			if(pos==(RGameGrid.GRID_DIM*RGameGrid.GRID_DIM-2)) {
+				solutions.add(new RGameGrid(game));
+				
+				//resetArray(pos);
+				pos = backtrack(pos);
+			}
 		
 			if(!game.isInitial(col, row)) {	
 				if(triedEverything(pos)) {	
@@ -58,7 +80,7 @@ public class Solver {
 	}
 	
 	private static void ininitialiseTries() {
-		for(int i = 0;i<(GameGrid.GRID_DIM*GameGrid.GRID_DIM-2);i++) {
+		for(int i = 0;i<(RGameGrid.GRID_DIM*RGameGrid.GRID_DIM-2);i++) {
 			for(int j = 0;j<10;j++) {
 				tries[i][j] = -1;
 			}
@@ -69,8 +91,8 @@ public class Solver {
 		int i=0,j=0;
 		boolean found=false;
 		
-		for(;i<GameGrid.GRID_DIM;i++) {
-			for(;j<GameGrid.GRID_DIM;j++) {
+		for(;i<RGameGrid.GRID_DIM;i++) {
+			for(;j<RGameGrid.GRID_DIM;j++) {
 				if(!game.isInitial(i, j)) {
 					found=true;
 					break;
@@ -80,7 +102,7 @@ public class Solver {
 			if(found) break;
 		}
 		
-		firstNonInitial = (i*GameGrid.GRID_DIM)+j;
+		firstNonInitial = (i*RGameGrid.GRID_DIM)+j;
 	}
 	
 	private static int backtrack(int pos) {

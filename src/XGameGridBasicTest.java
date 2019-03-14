@@ -1,7 +1,7 @@
 import org.junit.Test;
 import org.junit.Before;
 
-public class GameGridBasicTest {
+public class XGameGridBasicTest {
     private int[][] grid;
 
     @Before
@@ -21,42 +21,42 @@ public class GameGridBasicTest {
 
     @Test
     public void gameGridCtorTest() {
-        RGameGrid game = new RGameGrid(grid);
+        XGameGrid game = new XGameGrid(grid);
     }
 
     @Test
     public void gameGridCpyCtorTest() {
-        RGameGrid game = new RGameGrid(grid);
-        RGameGrid gameCpy = new RGameGrid(game);
+        XGameGrid game = new XGameGrid(grid);
+        XGameGrid gameCpy = new XGameGrid(game);
     }
 
     @Test
     public void isInitialTest() {
-       RGameGrid game = new RGameGrid(grid);
+       XGameGrid game = new XGameGrid(grid);
        boolean result = game.isInitial(0,0);
     }
 
     @Test
     public void getFieldTest() {
-       RGameGrid game = new RGameGrid(grid);
+       XGameGrid game = new XGameGrid(grid);
        int result = game.getField(0,0);
     }
 
     @Test
     public void setFieldTest() {
-       RGameGrid game = new RGameGrid(grid);
+       XGameGrid game = new XGameGrid(grid);
        game.setField(0,0,1);
     }
 
     @Test
     public void clearFieldTest() {
-       RGameGrid game = new RGameGrid(grid);
+       XGameGrid game = new XGameGrid(grid);
        game.clearField(0,0);
     }
 
     @Test
     public void toStringTest() {
-        RGameGrid game = new RGameGrid(grid);
+        XGameGrid game = new XGameGrid(grid);
         String result = game.toString();
     }
 }
