@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Solver {
 	
 	static int[][] tries = new int[RGameGrid.GRID_DIM*RGameGrid.GRID_DIM-2][10];
-	static int firstNonInitial=0;
+	static int firstNonInitial = 0;
 	private static GameGrid game;
 	private static ArrayList<GameGrid> solutions = new ArrayList<>();
 	
@@ -29,23 +29,20 @@ public class Solver {
 		int pos = 0;
 		int col = 0;
 		int row = 0;
-		boolean cantFindNewSolutions=false;
-		while(!cantFindNewSolutions) {		
-			col = pos/9;
-			row = pos%9;
-			
-			
-			//pos<(GameGrid.GRID_DIM*GameGrid.GRID_DIM-2)
-			
-			if(pos==(RGameGrid.GRID_DIM*RGameGrid.GRID_DIM-2)) {
+		boolean cantFindNewSolutions = false;
+		while ( !cantFindNewSolutions ) {		
+			col = pos / 9;
+			row = pos % 9;
+
+			if( pos == (RGameGrid.GRID_DIM*RGameGrid.GRID_DIM - 2) ) {
 				solutions.add(new RGameGrid(game));
 				
 				//resetArray(pos);
 				pos = backtrack(pos);
 			}
 		
-			if(!game.isInitial(col, row)) {	
-				if(triedEverything(pos)) {	
+			if ( !game.isInitial(col, row) ) {	
+				if ( triedEverything(pos) ) {	
 					//If no valid number in first non initial field, then it is unsolvable
 					if(pos==firstNonInitial) {
 						return false;
@@ -55,10 +52,10 @@ public class Solver {
 					pos = backtrack(pos);	
 					
 					continue;
-				} else if(!chooseValidNumber(col, row,pos)) {
+				} else if ( !chooseValidNumber(col, row,pos) ) {
 				
 					//If no valid number in first non initial field, then it is unsolvable
-					if(pos==firstNonInitial) {
+					if ( pos == firstNonInitial ) {
 						return false;
 					}
 					
@@ -80,38 +77,38 @@ public class Solver {
 	}
 	
 	private static void ininitialiseTries() {
-		for(int i = 0;i<(RGameGrid.GRID_DIM*RGameGrid.GRID_DIM-2);i++) {
-			for(int j = 0;j<10;j++) {
+		for( int i = 0; i < (RGameGrid.GRID_DIM*RGameGrid.GRID_DIM - 2 ) ; i++ ) {
+			for ( int j = 0 ; j < 10 ; j++ ) {
 				tries[i][j] = -1;
 			}
 		}
 	}
 	
 	private static void findFirstNonInitial() {
-		int i=0,j=0;
-		boolean found=false;
+		int i = 0 ,j = 0;
+		boolean found = false;
 		
-		for(;i<RGameGrid.GRID_DIM;i++) {
-			for(;j<RGameGrid.GRID_DIM;j++) {
-				if(!game.isInitial(i, j)) {
-					found=true;
+		for ( ; i < RGameGrid.GRID_DIM ; i++ ) {
+			for( ; j < RGameGrid.GRID_DIM ; j++ ) {
+				if( !game.isInitial(i, j) ) {
+					found = true;
 					break;
 				}
 			}
 			
-			if(found) break;
+			if ( found ) break;
 		}
 		
-		firstNonInitial = (i*RGameGrid.GRID_DIM)+j;
+		firstNonInitial = ( i * RGameGrid.GRID_DIM ) + j;
 	}
 	
 	private static int backtrack(int pos) {
 		do {
-			if(pos==0) {
+			if( pos == 0 ) {
 				break;
 			}
 			pos--;
-		} while(game.isInitial(pos/9, pos%9));
+		} while ( game.isInitial(pos/9, pos%9) );
 		
 		return pos;
 	}
@@ -119,11 +116,11 @@ public class Solver {
 	private static boolean chooseValidNumber(int col, int row,int pos) {
 		int val = game.getField(col, row);
 		
-		for(int i = 1;i<=9;i++) {
+		for( int i = 1 ; i <= 9 ; i++ ) {
 			
-			if(val==i || triedAlready(i, pos)) continue;
+			if( val == i || triedAlready(i, pos) ) continue;
 			
-			if(game.setField(col, row, i)) {
+			if( game.setField(col, row, i) ) {
 				tries[pos][game.getField(col, row)] = 1;
 				return true;
 			}
@@ -133,18 +130,18 @@ public class Solver {
 	}
 	
 	private static boolean triedAlready(int val,int pos) {
-		return tries[pos][val]!=-1?true:false;
+		return tries[pos][val] != -1 ? true : false;
 	}
 	
 	private static void resetArray(int pos) {
-		for(int i = 0;i<10;i++) {
-			tries[pos][i]=-1;
+		for( int i = 0 ; i < 10 ; i++ ) {
+			tries[pos][i] = -1;
 		}
 	}
 	
 	private static boolean triedEverything(int pos) {
-		for(int i = 0;i<10;i++) {
-			if(tries[pos][i]<0) return false;
+		for( int i = 0; i < 10; i++ ) {
+			if(tries[pos][i] < 0) return false;
 		}
 		
 		return true;
